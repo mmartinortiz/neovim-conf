@@ -83,7 +83,7 @@ with final.pkgs.lib; let
     # ^ bleeding-edge plugins from flake inputs
     which-key-nvim
     # ^ Theme
-    tokyonight-nvim
+    catppuccin-nvim
   ];
 
   extraPackages = with pkgs; [
