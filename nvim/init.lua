@@ -14,6 +14,9 @@ if fn.has('termguicolors') then
   opt.termguicolors = true
 end
 
+vim.g.neovide_transparency = 0.8
+vim.g.neovie_refresh_rate = 240
+
 -- See :h <option> to see what the options do
 
 -- Search down into subfolders
@@ -22,7 +25,7 @@ opt.path = vim.o.path .. '**'
 opt.number = true
 opt.relativenumber = false
 opt.cursorline = true
-opt.lazyredraw = true
+opt.lazyredraw = false
 opt.showmatch = true -- Highlight matching parentheses, etc
 opt.incsearch = true
 opt.hlsearch = true

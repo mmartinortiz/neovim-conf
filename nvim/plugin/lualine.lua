@@ -1,87 +1,82 @@
-if vim.g.did_load_lualine_plugin then
-  return
-end
-vim.g.did_load_lualine_plugin = true
-
-local navic = require('nvim-navic')
-navic.setup {}
-
----Indicators for special modes,
----@return string status
-local function extra_mode_status()
-  -- recording macros
-  local reg_recording = vim.fn.reg_recording()
-  if reg_recording ~= '' then
-    return ' @' .. reg_recording
-  end
-  -- executing macros
-  local reg_executing = vim.fn.reg_executing()
-  if reg_executing ~= '' then
-    return ' @' .. reg_executing
-  end
-  -- ix mode (<C-x> in insert mode to trigger different builtin completion sources)
-  local mode = vim.api.nvim_get_mode().mode
-  if mode == 'ix' then
-    return '^X: (^]^D^E^F^I^K^L^N^O^Ps^U^V^Y)'
-  end
-  return ''
-end
+local mode_map = {
+  ['n'] = '',
+  ['no'] = '',
+  ['nov'] = '',
+  ['noV'] = '',
+  ['no�'] = '',
+  ['niI'] = '',
+  ['niR'] = '',
+  ['niV'] = '',
+  ['nt'] = '',
+  ['v'] = '',
+  ['vs'] = '',
+  ['V'] = '',
+  ['Vs'] = '',
+  ['�'] = '',
+  ['�s'] = '',
+  ['s'] = '',
+  ['S'] = '',
+  ['�'] = '',
+  ['i'] = '',
+  ['ic'] = '',
+  ['ix'] = '',
+  ['R'] = '',
+  ['Rc'] = '',
+  ['Rx'] = '',
+  ['Rv'] = '',
+  ['Rvc'] = '',
+  ['Rvx'] = '',
+  ['c'] = '',
+  ['cv'] = '',
+  ['ce'] = '',
+  ['r'] = '',
+  ['rm'] = '',
+  ['r?'] = '',
+  ['!'] = '',
+  ['t'] = '',
+}
 
 require('lualine').setup {
-  globalstatus = true,
-  sections = {
-    lualine_c = {
-      -- nvim-navic
-      { navic.get_location, cond = navic.is_available },
-    },
-    lualine_z = {
-      -- (see above)
-      { extra_mode_status },
-    },
-  },
   options = {
-    theme = 'auto',
-  },
-  -- Example top tabline configuration (this may clash with other plugins)
-  -- tabline = {
-  --   lualine_a = {
-  --     {
-  --       'tabs',
-  --       mode = 1,
-  --     },
-  --   },
-  --   lualine_b = {
-  --     {
-  --       'buffers',
-  --       show_filename_only = true,
-  --       show_bufnr = true,
-  --       mode = 4,
-  --       filetype_names = {
-  --         TelescopePrompt = 'Telescope',
-  --         dashboard = 'Dashboard',
-  --         fzf = 'FZF',
-  --       },
-  --       buffers_color = {
-  --         -- Same values as the general color option can be used here.
-  --         active = 'lualine_b_normal', -- Color for active buffer.
-  --         inactive = 'lualine_b_inactive', -- Color for inactive buffer.
-  --       },
-  --     },
-  --   },
-  --   lualine_c = {},
-  --   lualine_x = {},
-  --   lualine_y = {},
-  --   lualine_z = {},
-  -- },
-  winbar = {
-    lualine_z = {
-      {
-        'filename',
-        path = 1,
-        file_status = true,
-        newfile_status = true,
-      },
+    icons_enabled = true,
+    theme = 'catppuccin',
+    section_separators = { left = '', right = '' },
+    component_separators = { left = '', right = '' },
+    disabled_filetypes = {
+      statusline = {},
+      winbar = {},
+    },
+    ignore_focus = {},
+    always_divide_middle = true,
+    globalstatus = false,
+    refresh = {
+      statusline = 1000,
+      tabline = 1000,
+      winbar = 1000,
     },
   },
-  extensions = { 'fugitive', 'fzf', 'toggleterm', 'quickfix' },
+  sections = {
+    lualine_a = {
+      function()
+        return mode_map[vim.api.nvim_get_mode().mode] or '__'
+      end,
+    },
+    lualine_b = { 'branch' },
+    lualine_c = {},
+    lualine_x = {},
+    lualine_y = {},
+    lualine_z = {},
+  },
+  inactive_sections = {
+    lualine_a = {},
+    lualine_b = {},
+    lualine_c = { 'filename' },
+    lualine_x = { 'location' },
+    lualine_y = {},
+    lualine_z = {},
+  },
+  tabline = {},
+  winbar = {},
+  inactive_winbar = {},
+  extensions = {},
 }

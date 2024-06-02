@@ -15,7 +15,7 @@ with final.pkgs.lib; let
   pkgs-wrapNeovim = inputs.nixpkgs.legacyPackages.${pkgs.system};
 
   # This is the helper function that builds the Neovim derivation.
-  mkNeovim = pkgs.callPackage ./mkNeovim.nix { inherit pkgs-wrapNeovim; };
+  mkNeovim = pkgs.callPackage ./mkNeovim.nix {inherit pkgs-wrapNeovim;};
 
   # A plugin can either be a package or an attrset, such as
   # { plugin = <plugin>; # the package, e.g. pkgs.vimPlugins.nvim-cmp
@@ -84,12 +84,51 @@ with final.pkgs.lib; let
     which-key-nvim
     # ^ Theme
     catppuccin-nvim
+    nvim-autopairs
+    nvim-lspconfig
+    nvim-colorizer-lua
+    bufferline-nvim
+    friendly-snippets
+    null-ls-nvim
+    neo-tree-nvim
+    comment-nvim
+    nvim-notify
+    nui-nvim # UI Component Library for Neovim.
+    noice-nvim # Highly experimental plugin that completely replaces the UI for messages, cmdline and the popupmenu.
+    alpha-nvim # A lua powered greeter like vim-startify / dashboard-nvim
+    (nvim-treesitter.withPlugins (p: [
+      p.c
+      p.cpp
+      p.nix
+      p.lua
+      p.python
+      p.markdown
+      p.markdown_inline
+      p.regex
+      p.bash
+      p.fish
+    ]))
   ];
 
   extraPackages = with pkgs; [
     # language servers, etc.
     lua-language-server
     nil # nix LSP
+    deadnix
+    statix
+    nixd
+    nil
+    clang-tools
+    nodePackages.vscode-langservers-extracted
+    nodePackages.typescript-language-server
+    stylua
+    prettierd
+    eslint_d
+    nixpkgs-fmt
+    nixfmt-classic
+    nodePackages.pyright
+    black
+    isort
   ];
 in {
   # This is the neovim derivation
