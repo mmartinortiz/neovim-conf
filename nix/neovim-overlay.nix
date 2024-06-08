@@ -52,7 +52,6 @@ let
     neogit # https://github.com/TimUntersberger/neogit/
     noice-nvim # Highly experimental plugin that completely replaces the UI for messages, cmdline and the popupmenu.
     nui-nvim # UI Component Library for Neovim.
-    null-ls-nvim
     nvim-autopairs
     nvim-cmp # https://github.com/hrsh7th/nvim-cmp
     nvim-colorizer-lua
@@ -91,11 +90,9 @@ let
 
   extraPackages = with pkgs; [
     # language servers, etc.
-    black
     clang-tools
     deadnix
     eslint_d
-    isort
     lua-language-server
     nil
     nixd
@@ -105,6 +102,7 @@ let
     nodePackages.typescript-language-server
     nodePackages.vscode-langservers-extracted
     prettierd
+    ruff-lsp
     statix
     stylua
   ];
