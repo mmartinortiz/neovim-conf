@@ -98,7 +98,7 @@ let
     nixd
     nixfmt-classic
     nixpkgs-fmt
-    nodePackages.pyright
+    pyright
     nodePackages.typescript-language-server
     nodePackages.vscode-langservers-extracted
     prettierd
