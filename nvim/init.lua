@@ -67,25 +67,7 @@ sign { name = 'DiagnosticSignInfo', text = 'ⓘ' }
 sign { name = 'DiagnosticSignHint', text = '󰌶' }
 
 vim.diagnostic.config {
-  virtual_text = {
-    prefix = '',
-    format = function(diagnostic)
-      local severity = diagnostic.severity
-      if severity == vim.diagnostic.severity.ERROR then
-        return prefix_diagnostic('󰅚', diagnostic)
-      end
-      if severity == vim.diagnostic.severity.WARN then
-        return prefix_diagnostic('⚠', diagnostic)
-      end
-      if severity == vim.diagnostic.severity.INFO then
-        return prefix_diagnostic('ⓘ', diagnostic)
-      end
-      if severity == vim.diagnostic.severity.HINT then
-        return prefix_diagnostic('󰌶', diagnostic)
-      end
-      return prefix_diagnostic('■', diagnostic)
-    end,
-  },
+  virtual_text = false,
   signs = true,
   update_in_insert = false,
   underline = true,
@@ -101,6 +83,16 @@ vim.diagnostic.config {
 }
 
 g.editorconfig = true
+
+-- You will likely want to reduce updatetime which affects CursorHold
+-- note: this setting is global and should be set only once
+vim.o.updatetime = 250
+vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
+  group = vim.api.nvim_create_augroup("float_diagnostic", { clear = true }),
+  callback = function ()
+    vim.diagnostic.open_float(nil, {focus=false})
+  end
+})
 
 vim.opt.colorcolumn = '100'
 
