@@ -1,8 +1,6 @@
 # This overlay, when applied to nixpkgs, adds the final neovim derivation to nixpkgs.
-{ inputs }:
-final: prev:
-with final.pkgs.lib;
-let
+{inputs}: final: prev:
+with final.pkgs.lib; let
   pkgs = final;
 
   # Use this to create a plugin from a flake input
@@ -17,7 +15,7 @@ let
   pkgs-wrapNeovim = inputs.nixpkgs.legacyPackages.${pkgs.system};
 
   # This is the helper function that builds the Neovim derivation.
-  mkNeovim = pkgs.callPackage ./mkNeovim.nix { inherit pkgs-wrapNeovim; };
+  mkNeovim = pkgs.callPackage ./mkNeovim.nix {inherit pkgs-wrapNeovim;};
 
   # A plugin can either be a package or an attrset, such as
   # { plugin = <plugin>; # the package, e.g. pkgs.vimPlugins.nvim-cmp
@@ -43,9 +41,11 @@ let
     comment-nvim
     diffview-nvim # https://github.com/sindrets/diffview.nvim/
     eyeliner-nvim # Highlights unique characters for f/F and t/T motions | https://github.com/jinh0/eyeliner.nvim
+    efmls-configs-nvim # An unofficial collection of linters and formatters configured for efm-langserver for neovim. | https://github.com/creativenull/efmls-configs-nvim/
     friendly-snippets
     gitsigns-nvim # https://github.com/lewis6991/gitsigns.nvim/
     lspkind-nvim # vscode-like LSP pictograms | https://github.com/onsails/lspkind.nvim/
+    lsp-format-nvim # A wrapper around Neovims native LSP formatting | https://github.com/lukas-reineke/lsp-format.nvim
     lualine-nvim # Status line | https://github.com/nvim-lualine/lualine.nvim/
     luasnip # snippets | https://github.com/l3mon4d3/luasnip/
     neo-tree-nvim
@@ -92,19 +92,22 @@ let
     # language servers, etc.
     clang-tools
     deadnix
+    efm-langserver
     eslint_d
     lua-language-server
     nil
     nixd
     nixfmt-classic
     nixpkgs-fmt
-    pyright
     nodePackages.typescript-language-server
     nodePackages.vscode-langservers-extracted
     prettierd
+    pyright
     ruff-lsp
     statix
     stylua
+    taplo
+    yaml-language-server
   ];
 in {
   # This is the neovim derivation
@@ -115,7 +118,7 @@ in {
   };
 
   # This can be symlinked in the devShell's shellHook
-  nvim-luarc-json = final.mk-luarc-json { plugins = all-plugins; };
+  nvim-luarc-json = final.mk-luarc-json {plugins = all-plugins;};
 
   # You can add as many derivations as you like.
   # Use `ignoreConfigRegexes` to filter out config

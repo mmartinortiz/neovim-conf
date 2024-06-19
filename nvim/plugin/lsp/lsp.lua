@@ -11,6 +11,11 @@ local on_attach = function(client, bufnr)
   end
 end
 
+require("lsp-format").setup {}
+
+local prettier = require('efmls-configs.formatters.prettier_d')
+local taplo = require('efmls-configs.formatters.taplo')
+
 require('lspconfig').nil_ls.setup {
   autostart = true,
   capabilities = capabilities,
@@ -56,4 +61,33 @@ require('lspconfig').ruff_lsp.setup {
     },
   },
   on_attach = on_attach,
+}
+
+require('lspconfig').yamlls.setup {
+  settings = {
+    yaml = {
+      schemas = {
+        ["https://json.schemastore.org/github-workflow.json"] = "/.github/workflows/*",
+        ["../path/relative/to/file.yml"] = "/.github/workflows/*",
+        ["/path/from/root/of/project"] = "/.github/workflows/*",
+      },
+    },
+  }
+}
+
+
+require("lspconfig").efm.setup {
+  on_attach = require("lsp-format").on_attach,
+  init_options = { documentFormatting = true },
+  settings = {
+    languages = {
+      json = { prettier },
+      markdown = { prettier },
+      sql = { prettier },
+      toml = { taplo },
+      typescript = { prettier },
+      xml = { prettier },
+      yaml = { prettier },
+    },
+  },
 }
