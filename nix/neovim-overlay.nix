@@ -90,6 +90,7 @@ with final.pkgs.lib; let
 
   extraPackages = with pkgs; [
     # language servers, etc.
+    alejandra
     clang-tools
     deadnix
     efm-langserver
@@ -97,7 +98,6 @@ with final.pkgs.lib; let
     lua-language-server
     nil
     nixd
-    nixfmt-classic
     nixpkgs-fmt
     nodePackages.typescript-language-server
     nodePackages.vscode-langservers-extracted
