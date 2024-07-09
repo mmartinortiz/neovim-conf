@@ -63,7 +63,7 @@ with final.pkgs.lib; let
     nvim-treesitter-textobjects # https://github.com/nvim-treesitter/nvim-treesitter-textobjects/
     nvim-treesitter.withAllGrammars
     nvim-ts-context-commentstring # https://github.com/joosepalviste/nvim-ts-context-commentstring/
-    nvim-unception # Prevent nested neovim sessions | nvim-unception
+    # nvim-unception # Prevent nested neovim sessions | nvim-unception
     nvim-web-devicons
     plenary-nvim
     # statuscol-nvim # Status column | https://github.com/luukvbaal/statuscol.nvim/
