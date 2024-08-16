@@ -5,70 +5,37 @@ wk.setup {
   },
 }
 wk.register {
- ['<leader>'] = {
-    w = { '<cmd>w<cr>', 'Save Buffer' },
-    q = { '<cmd>q<cr>', 'Quit' },
-    e = { ':Neotree action=focus reveal toggle<cr>', 'Toggle Neotree' },
-    o = {
-      function()
-        if vim.bo.filetype == 'neo-tree' then
-          vim.cmd.wincmd('p')
-        else
-          vim.cmd.Neotree('focus')
-        end
-      end,
-      'Neotree Focus',
-    },
-    c = { ':bdelete!<CR>', 'Close Buffer' },
-    f = {
-      name = 'File',
-      f = { '<cmd>Telescope find_files<cr>', 'Find File' },
-      r = { '<cmd>Telescope oldfiles<cr>', 'Open Recent File' },
-      n = { '<cmd>enew<cr>', 'New File' },
-      w = { '<cmd>Telescope live_grep<cr>', 'Grep Files' },
-      b = { '<cmd>Telescope buffers<cr>', 'Grep Buffers' },
-      h = { '<cmd>Telescope help_tags<cr>', 'Grep Help Tags' },
-      d = { '<cmd>Telescope diagnostics<cr>', 'Grep Diagnostics' },
-      g = { '<cmd>Telescope git_files<cr>', 'Grep Git Files' },
-    },
-    t = {
-      name = 'File',
-      t = { '<cmd>ToggleTerm<cr>', 'Toggle Terminal' },
-      f = { '<cmd>ToggleTerm direction=float<cr>', 'Toggle Float Terminal' },
-    },
-    g = {
-      name = 'Git',
-      l = { '<cmd>Gitsigns blame_line<cr>', 'View Git Blame' },
-      L = { '<cmd>Gitsigns blame_line {full = true}<cr>', 'View full Git Blame' },
-      p = { '<cmd>Gitsigns preview_hunk<cr>', 'Preview Git Hunk' },
-      h = { '<cmd>Gitsigns reset_hunk<cr>', 'Reset Git Hunk' },
-      r = { '<cmd>Gitsigns reset_buffer<cr>', 'Reset Git Buffer' },
-      s = { '<cmd>Gitsigns stage_hunk<cr>', 'Stage Git Hunk' },
-      S = { '<cmd>Gitsigns stage_buffer<cr>', 'Stage Git Buffer' },
-      u = { '<cmd>Gitsigns undo_stage_hunk<cr>', 'Unstage Git Hunk' },
-      d = { '<cmd>Gitsigns diffthis<cr>', 'View Git Diff' },
-    },
-    l = {
-      name = 'Lsp',
-      i = { '<cmd>LspInfo<cr>', 'LSP Information' },
-      I = { '<cmd>NullLsInfo<cr>', 'Null-ls Information' },
-      a = { '<cmd>lua vim.lsp.buf.code_action()<cr>', 'LSP Code Action' },
-      h = { '<cmd>lua vim.lsp.buf.signature_help()<cr>', 'Signature Help' },
-      r = { '<cmd>lua vim.lsp.buf.rename()<cr>', 'Rename Current Symbol' },
-      l = { '<cmd>lua vim.lsp.codelens.refresh()<cr>', 'LSP CodeLens Refresh' },
-      L = { '<cmd>lua vim.lsp.codelens.run()<cr>', 'LSP CodeLens Run' },
-      R = { '<cmd>Telescope lsp_references<cr>', 'Search References' },
-    },
-  },
-  ['g'] = {
-    d = { '<cmd>Telescope lsp_definitions<cr>', 'Goto Definition' },
-    I = { '<cmd>Telescope lsp_implementations<cr>', 'Goto Implementation' },
-    r = { '<cmd>Telescope lsp_references<cr>', 'Search References' },
-    l = { '<cmd>lua vim.diagnostic.open_float()<CR>', 'Hover Diagnostics' },
-    y = { '<cmd>Telescope lsp_type_definitions<cr>', 'Definition of Current Type' },
-  },
-  ['<S-h>'] = { '<cmd>bprevious<cr>', 'Left Buffer' },
-  ['<S-l>'] = { '<cmd>bnext<cr>', 'Right Buffer' },
-  ['K'] = { '<cmd>lua vim.lsp.buf.hover()<cr>', 'Hover Symbol Details' },
+  -- File Group
+  { "<leader>f", group = "File"},
+  { "<leader>ff", "<cmd>Telescope find_files<cr>", "Find file" },
+  { "<leader>fr", "<cmd>Telescope oldfiles<cr>", "Open Recent file" },
+  { "<leader>fn", "enew", "New file" },
+  { "<leader>fw", "<cmd>Telescope live_grep<cr>", "Grep files" },
+  { "<leader>fb", "<cmd>Telescope buffers<cr>", "Grep buffers" },
+  { "<leader>fh", "<cmd>Telescope help_tags<cr>", "Grep Help Tags" },
+  { "<leader>fd", "<cmd>Telescope diagnostics<cr>", "Grep Diagnostics" },
+  { "<leader>fg", "<cmd>Telescope git_files<cr>", "Grep Git Files" },
+
+  -- Terminal Group
+  { "<leader>t", group = "Terminal" },
+  { "<leader>tt", "<cmd>ToggleTerm<cr>", "Toggle Terminal" },
+  { "<leader>tt", "<cmd>ToggleTerm direction=float<cr>", "Toggle Float Terminal" },
+
+  -- LSP Group
+  { "<leader>l", group = "LSP" },
+  { "<leader>lr", "<cmd>vim.lsp.buf.rename()<cr>", "Rename Current Symbol" },
+
+  -- Goto group
+  { "<leader>g", group = "Goto" },
+  { "<leader>gd", "<cmd>Telescope lsp_definitions<cr>", "Goto Definition" },
+  { "<leader>gI", "<cmd>Telescope lsp_implementations<cr>", "Goto Implementation" },
+  { "<leader>gr", "<cmd>Telescope lsp_references<cr>", "Goto References" },
+  { "<leader>gi", "<cmd>lua vim.diagnostic.open_float()<cr>", "Hove Diagnostics" },
+  { "<leader>gk", "<cmd>lua vim.lsp.buf.hover()<cr>", "Hove Symbol Details" },
+
+  -- Various
+  { "<leader>e", "<cmd>Neotree action=focus reveal toggle<cr>", "Toggle Neotree" },
+  { "<S-h>", "<cmd>bprevious<cr>", "Left Buffer" },
+  { "<S-l>", "<cmd>bnext<cr>", "Right Buffer" },
 }
 
