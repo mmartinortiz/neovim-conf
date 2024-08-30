@@ -11,6 +11,8 @@ with lib;
     # NVIM_APPNAME - Defaults to 'nvim' if not set.
     # If set to something else, this will also rename the binary.
     appName ? null,
+    # The Neovim package to wrap
+    neovim-unwrapped ? pkgs-wrapNeovim.neovim-unwrapped,
     plugins ? [], # List of plugins
     # List of dev plugins (will be bootstrapped) - useful for plugin developers
     # { name = <plugin-name>; url = <git-url>; }
@@ -95,11 +97,17 @@ with lib;
       '';
 
       installPhase = ''
-        cp -r after $out/after
-        rm -r after
         cp -r lua $out/lua
         rm -r lua
-        cp -r * $out/nvim
+        # Copy nvim/after only if it exists
+        if [ -d "after" ]; then
+            cp -r after $out/after
+            rm -r after
+        fi
+        # Copy rest of nvim/ subdirectories only if they exist
+        if [ ! -z "$(ls -A)" ]; then
+            cp -r -- * $out/nvim
+        fi
       '';
     };
 
@@ -160,7 +168,7 @@ with lib;
         ''--set LIBSQLITE "${pkgs.sqlite.out}/lib/libsqlite3.so"'')
     );
 
-    luaPackages = pkgs.neovim-unwrapped.lua.pkgs;
+    luaPackages = neovim-unwrapped.lua.pkgs;
     resolvedExtraLuaPackages = extraLuaPackages luaPackages;
 
     # Native Lua libraries
@@ -174,7 +182,7 @@ with lib;
       ''--suffix LUA_PATH ";" "${concatMapStringsSep ";" luaPackages.getLuaPath resolvedExtraLuaPackages}"'';
 
     # wrapNeovimUnstable is the nixpkgs utility function for building a Neovim derivation.
-    neovim-wrapped = pkgs-wrapNeovim.wrapNeovimUnstable pkgs.neovim-unwrapped (neovimConfig
+    neovim-wrapped = pkgs-wrapNeovim.wrapNeovimUnstable neovim-unwrapped (neovimConfig
       // {
         luaRcContent = initLua;
         wrapperArgs =

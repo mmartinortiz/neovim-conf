@@ -5,7 +5,7 @@ with final.pkgs.lib; let
 
   # Use this to create a plugin from a flake input
   mkNvimPlugin = src: pname:
-    pkgs.vimUtils.buildNeovimPlugin {
+    pkgs.vimUtils.buildVimPlugin {
       inherit pname src;
       version = src.lastModifiedDate;
     };
@@ -15,7 +15,7 @@ with final.pkgs.lib; let
   pkgs-wrapNeovim = inputs.nixpkgs.legacyPackages.${pkgs.system};
 
   # This is the helper function that builds the Neovim derivation.
-  mkNeovim = pkgs.callPackage ./mkNeovim.nix {inherit pkgs-wrapNeovim;};
+  mkNeovim = pkgs.callPackage ./mkNeovim.nix { inherit pkgs-wrapNeovim; };
 
   # A plugin can either be a package or an attrset, such as
   # { plugin = <plugin>; # the package, e.g. pkgs.vimPlugins.nvim-cmp
@@ -118,7 +118,9 @@ in {
   };
 
   # This can be symlinked in the devShell's shellHook
-  nvim-luarc-json = final.mk-luarc-json {plugins = all-plugins;};
+  nvim-luarc-json = final.mk-luarc-json {
+    plugins = all-plugins;
+  };
 
   # You can add as many derivations as you like.
   # Use `ignoreConfigRegexes` to filter out config

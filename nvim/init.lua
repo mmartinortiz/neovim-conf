@@ -53,22 +53,35 @@ local function prefix_diagnostic(prefix, diagnostic)
   return string.format(prefix .. ' %s', diagnostic.message)
 end
 
-local sign = function(opts)
-  fn.sign_define(opts.name, {
-    texthl = opts.name,
-    text = opts.text,
-    numhl = '',
-  })
-end
--- Requires Nerd fonts
-sign { name = 'DiagnosticSignError', text = '󰅚' }
-sign { name = 'DiagnosticSignWarn', text = '⚠' }
-sign { name = 'DiagnosticSignInfo', text = 'ⓘ' }
-sign { name = 'DiagnosticSignHint', text = '󰌶' }
-
 vim.diagnostic.config {
-  virtual_text = false,
-  signs = true,
+  virtual_text = {
+    prefix = '',
+    format = function(diagnostic)
+      local severity = diagnostic.severity
+      if severity == vim.diagnostic.severity.ERROR then
+        return prefix_diagnostic('󰅚', diagnostic)
+      end
+      if severity == vim.diagnostic.severity.WARN then
+        return prefix_diagnostic('⚠', diagnostic)
+      end
+      if severity == vim.diagnostic.severity.INFO then
+        return prefix_diagnostic('ⓘ', diagnostic)
+      end
+      if severity == vim.diagnostic.severity.HINT then
+        return prefix_diagnostic('󰌶', diagnostic)
+      end
+      return prefix_diagnostic('■', diagnostic)
+    end,
+  },
+  signs = {
+    text = {
+      -- Requires Nerd fonts
+      [vim.diagnostic.severity.ERROR] = '󰅚',
+      [vim.diagnostic.severity.WARN] = '⚠',
+      [vim.diagnostic.severity.INFO] = 'ⓘ',
+      [vim.diagnostic.severity.HINT] = '󰌶',
+    },
+  },
   update_in_insert = false,
   underline = true,
   severity_sort = true,
@@ -84,16 +97,6 @@ vim.diagnostic.config {
 
 g.editorconfig = true
 
--- You will likely want to reduce updatetime which affects CursorHold
--- note: this setting is global and should be set only once
-vim.o.updatetime = 250
-vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
-  group = vim.api.nvim_create_augroup("float_diagnostic", { clear = true }),
-  callback = function ()
-    vim.diagnostic.open_float(nil, {focus=false})
-  end
-})
-
 vim.opt.colorcolumn = '100'
 
 -- Native plugins
@@ -102,11 +105,3 @@ cmd.packadd('cfilter') -- Allows filtering the quickfix list with :cfdo
 
 -- let sqlite.lua (which some plugins depend on) know where to find sqlite
 vim.g.sqlite_clib_path = require('luv').os_getenv('LIBSQLITE')
-
--- Restore cursor position
-vim.api.nvim_create_autocmd({ "BufReadPost" }, {
-    pattern = { "*" },
-    callback = function()
-        vim.api.nvim_exec('silent! normal! g`"zv', false)
-    end,
-})

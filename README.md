@@ -21,7 +21,7 @@
   <p>
     <strong>
       A dead simple <a href="https://nixos.org/">Nix</a> flake template repository</br>
-      for <a href="https://neovim.io/">Neovim</a> 
+      for <a href="https://neovim.io/">Neovim</a>
     </strong>
   </p>
 
@@ -31,7 +31,6 @@
 
 [![GPL2 License][license-shield]][license-url]
 [![Issues][issues-shield]][issues-url]
-
 </div>
 <!-- markdownlint-restore -->
 
@@ -67,15 +66,14 @@ for maximum flexibility.
 - Configuration entirely in Lua[^1] (Vimscript is also possible).
   This makes it easy to migrate from non-nix dotfiles.
 - Use Neovim's built-in loading mechanisms. See:
-  - [`:h initialization`](https://neovim.io/doc/user/starting.html#initialization)
-  - [`:h runtimepath`](https://neovim.io/doc/user/options.html#'runtimepath')
-  - [`:h packadd`](https://neovim.io/doc/user/repeat.html#%3Apackadd)
+    - [`:h initialization`](https://neovim.io/doc/user/starting.html#initialization)
+    - [`:h runtimepath`](https://neovim.io/doc/user/options.html#'runtimepath')
+    - [`:h packadd`](https://neovim.io/doc/user/repeat.html#%3Apackadd)
 - Use Neovim's built-in LSP client, with Nix managing language servers.
 
-[^1]:
-    The absence of a Nix module DSL for Neovim configuration is deliberate.
-    If you were to copy the `nvim` directory to `$XDG_CONFIG_HOME`,
-    and install the plugins, it would work out of the box.
+[^1]: The absence of a Nix module DSL for Neovim configuration is deliberate.
+      If you were to copy the `nvim` directory to `$XDG_CONFIG_HOME`,
+      and install the plugins, it would work out of the box.
 
 ## :star2: Features
 
@@ -99,14 +97,14 @@ nix run "github:nix-community/kickstart-nix.nvim"
 ## :books: Usage
 
 1. Click on [Use this template](https://github.com/nix-community/kickstart-nix.nvim/generate)
-   to start a repo based on this template. **Do _not_ fork it**.
+to start a repo based on this template. **Do _not_ fork it**.
 1. Add/remove plugins to/from the [Neovim overlay](./nix/neovim-overlay.nix).
 1. Add/remove plugin configs to/from the `nvim/plugin` directory.
 1. Modify as you wish (you will probably want to add a color theme, ...).
-   See: [Design](#design).
+   See: [Design](#robot-design).
 1. You can create more than one package using the `mkNeovim` function by
-   - Passing different plugin lists.
-   - Adding `ignoreConfigRegexes` (e.g. `= [ "^ftplugin/.*.lua" ]`).
+    - Passing different plugin lists.
+    - Adding `ignoreConfigRegexes` (e.g. `= [ "^ftplugin/.*.lua" ]`).
 
 > [!TIP]
 >
@@ -269,9 +267,8 @@ Here is how I usually do it:
 - Run `nix run /path/to/neovim/#nvim`
   or `nix run /path/to/neovim/#nvim -- <nvim-args>`
 
-[^2]:
-    When adding new files, nix flakes won't pick them up unless they
-    have been committed or staged.
+[^2]: When adding new files, nix flakes won't pick them up unless they
+      have been committed or staged.
 
 This requires a rebuild of the `nvim` derivation, but has the advantage
 that if anything breaks, it's only broken during your test run.
@@ -307,9 +304,9 @@ To work around this, you can put scripts in the `plugin` or `after/plugin` direc
 - [`nixCats-nvim`](https://github.com/BirdeeHub/nixCats-nvim):
   A project that organises plugins into categories.
   It also separates lua and nix configuration.
-- [`lazy-nix-helper.nvim`](https://github.com/b-src/lazy-nix-helper.nvim):
-  For lazy.nvim users who would like to manage plugins with Nix,
-  but load them with lazy.nvim.
+- [`lz.n`](https://github.com/nvim-neorocks/lz.n):
+  A plugin-manager agnostic Lua library for lazy-loading plugins.
+  Can be used with Nix.
 
 > [!NOTE]
 >
@@ -321,7 +318,6 @@ To work around this, you can put scripts in the `plugin` or `after/plugin` direc
 > (though they are far more minimal by default).
 
 <!-- MARKDOWN LINKS & IMAGES -->
-
 [neovim-shield]: https://img.shields.io/badge/NeoVim-%2357A143.svg?&style=for-the-badge&logo=neovim&logoColor=white
 [neovim-url]: https://neovim.io/
 [nix-shield]: https://img.shields.io/badge/nix-0175C2?style=for-the-badge&logo=NixOS&logoColor=white
