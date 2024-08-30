@@ -3,7 +3,9 @@ wk.setup {
   win = {
     border = 'single',
   },
-  add = {
+}
+wk.add({
+  -- add = {
     -- File Group
     { "<leader>f",  group = "File" },
     { "<leader>ff", "<cmd>Telescope find_files<cr>",               desc = "Find file" },
@@ -36,5 +38,6 @@ wk.setup {
     { "<leader>e",  "<cmd>Neotree action=focus reveal toggle<cr>", desc = "Toggle Neotree" },
     { "<S-h>",      "<cmd>bprevious<cr>",                          desc = "Left Buffer" },
     { "<S-l>",      "<cmd>bnext<cr>",                              desc = "Right Buffer" },
-  }
+  -- }
 }
+)
