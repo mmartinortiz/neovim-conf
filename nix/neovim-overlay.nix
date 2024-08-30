@@ -40,7 +40,7 @@ with final.pkgs.lib; let
     cmp_luasnip # snippets autocompletion extension for nvim-cmp | https://github.com/saadparwaiz1/cmp_luasnip/
     comment-nvim
     diffview-nvim # https://github.com/sindrets/diffview.nvim/
-    eyeliner-nvim # Highlights unique characters for f/F and t/T motions | https://github.com/jinh0/eyeliner.nvim
+    # eyeliner-nvim # Highlights unique characters for f/F and t/T motions | https://github.com/jinh0/eyeliner.nvim
     efmls-configs-nvim # An unofficial collection of linters and formatters configured for efm-langserver for neovim. | https://github.com/creativenull/efmls-configs-nvim/
     friendly-snippets
     gitsigns-nvim # https://github.com/lewis6991/gitsigns.nvim/
